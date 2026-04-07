@@ -1,26 +1,70 @@
 <%- include('partials/header', { title: 'Welcome to Resume Builder' }) %>
 
-<header class="hero">
-    <h1>Create Your Professional Resume in Minutes</h1>
-    <p>Build an ATS-friendly resume that gets noticed. Easy to use, fast, and effective.</p>
-    <a href="/build" class="btn btn-primary">Get Started Now</a>
-</header>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Create Your Professional <span class="text-highlight">Resume</span> in Minutes</h1>
+            <p class="hero-subtitle">Build an ATS-friendly resume that gets noticed. Easy to use, fast, and effective. The precision curator for your career trajectory.</p>
+            <div class="hero-buttons">
+                <a href="/build" class="btn btn-primary btn-lg">Get Started Now</a>
+                <a href="#features" class="btn btn-secondary btn-lg">View Templates</a>
+            </div>
+            <div class="hero-social">
+                <div class="avatar-group">
+                    <div class="avatar"></div>
+                    <div class="avatar"></div>
+                    <div class="avatar"></div>
+                </div>
+                <span class="social-text">Joined by 10,000+ professionals this month</span>
+            </div>
+        </div>
+        <div class="hero-preview">
+            <div class="preview-card">
+                <img src="/images/resume-example-senior-financial-analyst.avif" alt="Resume Preview" class="preview-image">
+                <div class="preview-skeleton">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<section class="features">
-    <h2>Why Choose Our Resume Builder?</h2>
-    <div class="feature-list">
-        <div class="feature-item">
-            <h3>Easy to Use</h3>
-            <p>Our intuitive interface makes resume building a breeze.</p>
+<!-- Features Section -->
+<section class="features-section" id="features">
+    <div class="features-container">
+        <div class="features-header">
+            <h2 class="features-title">Why Choose Our Resume Builder?</h2>
+            <p class="features-subtitle">Designed for impact, engineered for efficiency. Our tools give you the professional edge you need.</p>
         </div>
-        <div class="feature-item">
-            <h3>ATS Friendly</h3>
-            <p>Create resumes optimized for Applicant Tracking Systems.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✦</div>
+                <h3>Easy to Use</h3>
+                <p>Our intuitive interface makes resume building a breeze. Focus on your story while we handle the formatting.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">◆</div>
+                <h3>ATS Friendly</h3>
+                <p>Create resumes optimized for Applicant Tracking Systems. Beat the algorithms and get your foot in the door.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⬇</div>
+                <h3>Downloadable</h3>
+                <p>Download your resume in standard formats. High-fidelity PDFs and editable versions ready for instant submission.</p>
+            </div>
         </div>
-        <div class="feature-item">
-            <h3>Downloadable</h3>
-            <p>Download your resume in standard formats (PDF coming soon).</p>
-        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-container">
+        <h2 class="cta-title">Ready to build your masterpiece?</h2>
+        <p class="cta-subtitle">Join thousands of job seekers who landed their dream jobs using our professional curator tools.</p>
+        <a href="/build" class="btn btn-cta">Get Started Now</a>
     </div>
 </section>
 

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Resume = require('../models/Resume');
-const puppeteer = require('puppeteer'); // Use puppeteer
+const puppeteer = require('puppeteer');
 const path = require('path');
-const ejs = require('ejs'); // To render EJS template to string
+const ejs = require('ejs');
+const config = require('../config');
 
 // Serve the landing page
 router.get('/', (req, res) => {
@@ -190,13 +191,8 @@ router.get('/resume/:id/download', async (req, res) => {
 
         console.log('[PDF Generation] Puppeteer environment variables:');
         console.log(`  PUPPETEER_EXECUTABLE_PATH (env): ${process.env.PUPPETEER_EXECUTABLE_PATH}`);
-        // PUPPETEER_CACHE_DIR is not relevant for puppeteer-core in this setup
-        
-        // Prefer env var, else use Render's system Chrome/Chromium path
-        const systemChrome = '/usr/bin/google-chrome-stable';
-        const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || systemChrome;
 
-        // Build launch options and always include executablePath
+        // Build launch options - Puppeteer will auto-detect browser if executablePath not set
         const launchOptions = {
             headless: true,
             args: [
@@ -207,21 +203,26 @@ router.get('/resume/:id/download', async (req, res) => {
                 '--no-first-run',
                 '--no-zygote',
                 '--disable-gpu'
-            ],
-            executablePath
+            ]
         };
 
-        // Try launch, fallback to no sandbox path if needed
+        // Only add executablePath if explicitly provided
+        if (config.puppeteer.executablePath) {
+            launchOptions.executablePath = config.puppeteer.executablePath;
+            console.log(`[PDF Generation] Using custom executable path: ${config.puppeteer.executablePath}`);
+        } else {
+            console.log('[PDF Generation] Using auto-detected browser (Puppeteer managed)');
+        }
+
+        // Launch browser
         try {
             browser = await puppeteer.launch(launchOptions);
         } catch (err) {
-            console.warn('[PDF Generation] launch failed, retrying without executablePath:', err.message);
-            delete launchOptions.executablePath;
-            browser = await puppeteer.launch(launchOptions);
-        }
-        if (!browser) {
-            console.error('[PDF Generation] Failed to launch Puppeteer browser. Browser object is null.');
-            return res.status(500).send('Error generating PDF: Could not initialize browser.');
+            console.error('[PDF Generation] Failed to launch browser:', err.message);
+            if (err.message.includes('Could not find Chrome')) {
+                console.error('[PDF Generation] Chrome not found. Run: npx puppeteer browsers install chrome');
+            }
+            return res.status(500).send('Error generating PDF: Browser initialization failed. ' + err.message);
         }
         console.log('[PDF Generation] Puppeteer browser launched.');
         

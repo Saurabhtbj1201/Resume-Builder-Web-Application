@@ -54,14 +54,37 @@ npm install
 ```
 
 ### Configuration
-- Update `server.js` with your MongoDB URI or set `MONGO_URI` env var.
-- (Optional) Set `PUPPETEER_EXECUTABLE_PATH` if using a custom Chrome binary.
+**Create a `.env` file** in the project root directory:
+
+```env
+# Environment Configuration
+NODE_ENV=development
+PORT=3000
+
+# MongoDB Configuration - Replace with your MongoDB URI
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database_name?retryWrites=true&w=majority
+
+# Application Settings
+LOG_LEVEL=debug
+```
+
+**Important**: Never commit `.env` to version control. Use `.env.example` as a template.
+
+For detailed production setup, see [PRODUCTION.md](./PRODUCTION.md)
+
+### Optional Environment Variables
+- `PUPPETEER_EXECUTABLE_PATH`: Path to Chrome/Chromium binary (defaults to system Chrome)
+- `LOG_LEVEL`: Logging level - `debug`, `info`, `warn`, `error` (default: depends on NODE_ENV)
 
 ### Run
 ```bash
-npm start
-# Visit http://localhost:3000
+# Development
+npm run dev    # Uses nodemon for auto-restart
+
+# Production
+npm start      # Sets NODE_ENV=production automatically
 ```
+Visit http://localhost:3000
 
 ### Usage
 1. **Build**: Navigate to `/build` to fill in your details.  
