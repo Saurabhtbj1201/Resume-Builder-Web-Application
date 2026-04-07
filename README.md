@@ -56,7 +56,7 @@ npm install
 ### Configuration
 **Create a `.env` file** in the project root directory:
 
-```env
+```.env
 # Environment Configuration
 NODE_ENV=development
 PORT=3000

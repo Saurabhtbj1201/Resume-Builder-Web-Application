@@ -5,13 +5,6 @@ services:
     plan: free 
     region: oregon 
     rootDir: .
-    # Add buildpacks. The order might matter.
-    # The heroku-community/puppeteer buildpack is a common choice.
-    # Render might have its own preferred buildpacks or way to specify system dependencies.
-    # You might need to add the standard Node.js buildpack if it's not automatically included.
-    buildpacks:
-      - https://github.com/jontewks/puppeteer-heroku-buildpack 
-      # - heroku/nodejs # May be needed if the above doesn't include Node.js environment setup
     buildCommand: "npm install" 
     startCommand: "npm start" 
     healthCheckPath: / 
@@ -20,28 +13,21 @@ services:
         value: production 
       - key: MONGODB_URI
         # This MUST be set in Render's dashboard environment variables
-      # Tell puppeteer-core NOT to download any browser.
-      # The buildpack is responsible for providing Chromium.
+      # Allow Puppeteer to download and manage its own Chromium
       - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
-        value: "true"
-      # Set PUPPETEER_EXECUTABLE_PATH to where the buildpack installs Chrome.
-      # Common paths are /usr/bin/google-chrome-stable or /app/.apt/usr/bin/google-chrome-stable
-      # Check your build logs from Render to confirm the exact path after the buildpack runs.
-      - key: PUPPETEER_EXECUTABLE_PATH 
-        value: /usr/bin/google-chrome-stable # A common path for buildpack-installed Chrome
-      # Remove PUPPETEER_CACHE_DIR as it's not used by puppeteer-core when skipping download
-      # - key: PUPPETEER_CACHE_DIR 
-      #   value: /opt/render/.cache/puppeteer
+        value: "false"
     buildFilter:
       paths:
         - "models/**"
         - "public/**"
         - "routes/**"
         - "views/**"
+        - "middleware/**"
         - "package.json"
         - "package-lock.json" 
         - "server.js"
-        - "render.yaml" 
+        - "render.yaml"
+        - "config.js"
       ignoredPaths:
         - "*.md"
         - ".gitignore"
