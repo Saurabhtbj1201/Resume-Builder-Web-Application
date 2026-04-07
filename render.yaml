@@ -16,6 +16,9 @@ services:
       # Allow Puppeteer to download and manage its own Chromium
       - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
         value: "false"
+      # Store Puppeteer cache within the project directory so it persists after deployment
+      - key: PUPPETEER_CACHE_DIR
+        value: /opt/render/project/src/.cache/puppeteer
     buildFilter:
       paths:
         - "models/**"
