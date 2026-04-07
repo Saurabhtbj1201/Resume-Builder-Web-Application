@@ -5,7 +5,7 @@ services:
     plan: free 
     region: oregon 
     rootDir: .
-    buildCommand: "npm install && npx puppeteer browsers install chrome" 
+    buildCommand: "npm install && node node_modules/puppeteer/install.js" 
     startCommand: "npm start" 
     healthCheckPath: / 
     envVars:
